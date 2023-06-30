@@ -1,6 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:page_down_inventory/controller/login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -42,9 +46,9 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.only(bottom: 15),
                 child: TextField(
                   onChanged: (text) {
-                    // setState(() {
-                    //   username = text;
-                    // });
+                    setState(() {
+                      username = text;
+                    });
                   },
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -60,9 +64,9 @@ class _LoginPageState extends State<LoginPage> {
                 margin: const EdgeInsets.only(bottom: 20),
                 child: TextField(
                   onChanged: (text) {
-                    // setState(() {
-                    //   password = text;
-                    // });
+                    setState(() {
+                      password = text;
+                    });
                   },
                   obscureText: true,
                   decoration: InputDecoration(
@@ -76,11 +80,29 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.only(bottom: 15),
+                child: TextField(
+                  onChanged: (text) {
+                    setState(() {
+                      server = text;
+                    });
+                  },
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      contentPadding:
+                          const EdgeInsets.symmetric(horizontal: 10),
+                      prefixIcon: const Icon(Icons.settings),
+                      hintText: "Server"),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: GestureDetector(
                   onTap: () {
-                    Navigator.popAndPushNamed(context, "/dashboard");
+                    // Navigator.popAndPushNamed(context, "/dashboard");
                     if (!isLoading) {
-                      // login(context);
+                      _login();
                     }
                   },
                   child: Container(
@@ -120,5 +142,26 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _login() async {
+    setState(() {
+      isLoading = true;
+    });
+    Map<String, String> data = {
+      "username": username,
+      "password": password,
+      "server": server
+    };
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("server", server);
+    bool isLogin = await IsLogin(data);
+    setState(() {
+      isLoading = false;
+    });
+    if (isLogin) {
+      Navigator.popAndPushNamed(context, "/dashboard");
+    }
+    log(data.toString());
   }
 }

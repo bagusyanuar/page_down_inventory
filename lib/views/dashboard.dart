@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -41,12 +42,7 @@ class _DashboardPageState extends State<DashboardPage> {
                   ),
                   GestureDetector(
                     onTap: () async {
-                      // SharedPreferences preferences =
-                      //     await SharedPreferences.getInstance();
-                      // preferences.remove("token");
-                      // preferences.remove("role");
-                      // Navigator.pushNamedAndRemoveUntil(context, "/login",
-                      //     ModalRoute.withName("/login"));
+                      _logout();
                     },
                     child: const Icon(Icons.logout),
                   )
@@ -106,5 +102,12 @@ class _DashboardPageState extends State<DashboardPage> {
         currentIndex: 0,
       ),
     );
+  }
+
+  void _logout() async {
+    SharedPreferences preference = await SharedPreferences.getInstance();
+    preference.remove("token");
+    Navigator.pushNamedAndRemoveUntil(
+        context, "/login", ModalRoute.withName("/login"));
   }
 }
