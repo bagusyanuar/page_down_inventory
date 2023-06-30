@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class MyCard extends StatelessWidget {
+class MyCardDetail extends StatelessWidget {
   final double height;
   final double marginBottom;
-  final String noMasuk;
-  final String tanggal;
-  final String supplier;
+  final String jenisBarang;
+  final String jenisBahan;
+  final String warna;
+  final String ukuran;
   final int qty;
-  const MyCard({
+  const MyCardDetail({
     Key? key,
     this.height = 100,
     this.marginBottom = 5,
-    this.noMasuk = "-",
-    this.tanggal = "-",
-    this.supplier = "-",
+    this.jenisBarang = "-",
+    this.jenisBahan = "-",
+    this.warna = "-",
+    this.ukuran = "-",
     this.qty = 0,
   }) : super(key: key);
 
@@ -40,10 +40,11 @@ class MyCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("No. Masuk : $noMasuk"),
-          Text("Tanggal : $tanggal"),
-          Text("Supplier : $supplier"),
-          Text("Total Barang : ${qty.toString()}"),
+          Text("Jenis Barang : $jenisBarang"),
+          Text("Jenis Bahan : $jenisBahan"),
+          Text("Warna : $warna"),
+          Text("Ukuran : $ukuran"),
+          Text("Jumlah : ${qty.toString()}"),
         ],
       ),
     );

@@ -84,12 +84,25 @@ class _BarangMasukPageState extends State<BarangMasukPage> {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: data
-                                    .map((e) => MyCard(
-                                          height: 120,
-                                          marginBottom: 10,
-                                        ))
-                                    .toList(),
+                                children: data.map((e) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      int id = e["id"] as int;
+                                      Navigator.pushNamed(
+                                          context, "/barang-masuk-detail",
+                                          arguments: id);
+                                    },
+                                    child: MyCard(
+                                      height: 100,
+                                      marginBottom: 5,
+                                      noMasuk: e["no_masuk"].toString(),
+                                      tanggal: e["tanggal"].toString(),
+                                      supplier:
+                                          e["supplier"]["nama"].toString(),
+                                      qty: e["sum_qty"] as int,
+                                    ),
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ),
