@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:page_down_inventory/views/barang-keluar-add.dart';
+import 'package:page_down_inventory/views/barang-keluar-detail.dart';
+import 'package:page_down_inventory/views/barang-keluar-list.dart';
 import 'package:page_down_inventory/views/barang-keluar.dart';
 import 'package:page_down_inventory/views/barang-masuk-add.dart';
 import 'package:page_down_inventory/views/barang-masuk-detail.dart';
+import 'package:page_down_inventory/views/barang-masuk-list.dart';
 import 'package:page_down_inventory/views/barang-masuk.dart';
 import 'package:page_down_inventory/views/dashboard.dart';
 import 'package:page_down_inventory/views/login.dart';
@@ -37,9 +41,13 @@ class MyApp extends StatelessWidget {
         "/login": (context) => const LoginPage(),
         "/dashboard": (context) => const DashboardPage(),
         "/barang-masuk": (context) => const BarangMasukPage(),
+        "/barang-masuk-list": (context) => const BarangMasukList(),
         "/barang-masuk-add": (context) => const BarangMasukAddPage(),
         "/barang-masuk-detail": (context) => const BarangMasukDetailPage(),
         "/barang-keluar": (context) => const BarangKeluarPage(),
+        "/barang-keluar-detail": (context) => const BarangKeluarDetailPage(),
+        "/barang-keluar-list": (context) => const BarangKeluarListPage(),
+        "/barang-keluar-add": (context) => const BarangKeluarAddPage(),
       },
     );
   }

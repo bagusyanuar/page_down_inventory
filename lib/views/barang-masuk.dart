@@ -29,7 +29,7 @@ class _BarangMasukPageState extends State<BarangMasukPage> {
           ? Container()
           : FloatingActionButton(
               onPressed: () {
-                Navigator.of(context).pushNamed("/barang-masuk-add");
+                Navigator.of(context).pushNamed("/barang-masuk-list");
               },
               backgroundColor: Colors.green.shade400,
               child: const Icon(Icons.add),

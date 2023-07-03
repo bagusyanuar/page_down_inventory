@@ -8,6 +8,8 @@ class CardCart extends StatelessWidget {
   final String warna;
   final String ukuran;
   final int qty;
+  final int id;
+  final VoidCallback? onTap;
   const CardCart({
     Key? key,
     this.height = 100,
@@ -17,6 +19,8 @@ class CardCart extends StatelessWidget {
     this.warna = "-",
     this.ukuran = "-",
     this.qty = 0,
+    this.id = 0,
+    this.onTap,
   }) : super(key: key);
 
   @override
@@ -45,6 +49,33 @@ class CardCart extends StatelessWidget {
           Text("Warna : $warna"),
           Text("Ukuran : $ukuran"),
           Text("Jumlah : ${qty.toString()}"),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.red,
+                        width: 1,
+                      ),
+                    ),
+                    child: const Text(
+                      "Hapus",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          )
         ],
       ),
     );

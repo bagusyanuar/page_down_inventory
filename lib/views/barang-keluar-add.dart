@@ -2,25 +2,23 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:page_down_inventory/components/cardCart.dart';
-import 'package:page_down_inventory/controller/barang-masuk.dart';
+import 'package:page_down_inventory/controller/barang-keluar.dart';
 import 'package:page_down_inventory/controller/barang.dart';
 
-class BarangMasukAddPage extends StatefulWidget {
-  const BarangMasukAddPage({Key? key}) : super(key: key);
+class BarangKeluarAddPage extends StatefulWidget {
+  const BarangKeluarAddPage({Key? key}) : super(key: key);
 
   @override
-  State<BarangMasukAddPage> createState() => _BarangMasukAddPageState();
+  State<BarangKeluarAddPage> createState() => _BarangKeluarAddPageState();
 }
 
-class _BarangMasukAddPageState extends State<BarangMasukAddPage> {
+class _BarangKeluarAddPageState extends State<BarangKeluarAddPage> {
   int vJenisBarang = 0;
   int vJenisBahan = 0;
   int vWarna = 0;
   int vQty = 0;
   String vUkuran = '';
 
-  int vSupplier = 0;
   bool isLoadingFirst = true;
   bool isLoadingAdd = false;
   List<Map<String, dynamic>> jenisBarang = [
@@ -42,10 +40,6 @@ class _BarangMasukAddPageState extends State<BarangMasukAddPage> {
     {'id': 'XL', 'nama': 'XL'},
   ];
 
-  List<Map<String, dynamic>> supplier = [
-    {'id': 0, 'nama': '--pilih Supplier--'},
-  ];
-
   @override
   void initState() {
     // TODO: implement initState
@@ -57,7 +51,7 @@ class _BarangMasukAddPageState extends State<BarangMasukAddPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tambah Barang Masuk"),
+        title: const Text("Tambah Barang Keluar"),
       ),
       body: SafeArea(
         child: isLoadingFirst
@@ -307,7 +301,7 @@ class _BarangMasukAddPageState extends State<BarangMasukAddPage> {
       'qty': vQty,
     };
 
-    bool result = await isSaveCart(dataCart);
+    bool result = await isSaveCartOut(dataCart);
     setState(() {
       isLoadingAdd = false;
     });

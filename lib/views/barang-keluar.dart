@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:page_down_inventory/components/cardKeluar.dart';
+import 'package:page_down_inventory/controller/barang-keluar.dart';
 
 import '../components/card.dart';
 
@@ -12,61 +12,105 @@ class BarangKeluarPage extends StatefulWidget {
 }
 
 class _BarangKeluarPageState extends State<BarangKeluarPage> {
+  bool isLoading = true;
+  List<dynamic> data = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _getBarangKeluar();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Barang Keluar"),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: Colors.green.shade400,
-        child: const Icon(Icons.add),
-      ),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          height: MediaQuery.of(context).size.height,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                MyCard(
-                  height: 120,
-                  marginBottom: 10,
-                ),
-                MyCard(
-                  height: 120,
-                  marginBottom: 10,
-                ),
-                MyCard(
-                  height: 120,
-                  marginBottom: 10,
-                ),
-                MyCard(
-                  height: 120,
-                  marginBottom: 10,
-                ),
-                MyCard(
-                  height: 120,
-                  marginBottom: 10,
-                ),
-                MyCard(
-                  height: 120,
-                  marginBottom: 10,
-                ),
-                MyCard(
-                  height: 120,
-                  marginBottom: 10,
-                ),
-                MyCard(
-                  height: 120,
-                  marginBottom: 10,
-                ),
-              ],
+      floatingActionButton: isLoading
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed("/barang-keluar-list");
+              },
+              backgroundColor: Colors.green.shade400,
+              child: const Icon(Icons.add),
             ),
-          ),
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: RefreshIndicator(
+                onRefresh: () {
+                  return refresh();
+                },
+                child: isLoading
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(bottom: 5),
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.green,
+                            ),
+                          ),
+                          const Center(
+                            child: Text("Sedang Mengunduh Data..."),
+                          )
+                        ],
+                      )
+                    : data.isEmpty
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: const [
+                              Expanded(
+                                child: Center(
+                                  child: SingleChildScrollView(
+                                    physics: AlwaysScrollableScrollPhysics(),
+                                    child: Text("Data Tidak Tersedia"),
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        : SingleChildScrollView(
+                            physics: const AlwaysScrollableScrollPhysics(),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 10),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: data.map((e) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      int id = e["id"] as int;
+                                      Navigator.pushNamed(
+                                          context, "/barang-keluar-detail",
+                                          arguments: id);
+                                    },
+                                    child: MyCardKeluar(
+                                      height: 100,
+                                      marginBottom: 5,
+                                      noKeluar: e["no_keluar"].toString(),
+                                      tanggal: e["tanggal"].toString(),
+                                      customer: e["nama"].toString(),
+                                      qty: e["sum_qty"] as int,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ),
+              ),
+            )
+          ],
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -90,5 +134,20 @@ class _BarangKeluarPageState extends State<BarangKeluarPage> {
         currentIndex: 2,
       ),
     );
+  }
+
+  refresh() async {
+    _getBarangKeluar();
+  }
+
+  void _getBarangKeluar() async {
+    setState(() {
+      isLoading = true;
+    });
+    List<dynamic> tmpData = await getBarangKeluar();
+    setState(() {
+      isLoading = false;
+      data = tmpData;
+    });
   }
 }
