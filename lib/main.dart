@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_down_inventory/views/barang-keluar.dart';
+import 'package:page_down_inventory/views/barang-masuk-add.dart';
 import 'package:page_down_inventory/views/barang-masuk-detail.dart';
 import 'package:page_down_inventory/views/barang-masuk.dart';
 import 'package:page_down_inventory/views/dashboard.dart';
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         "/login": (context) => const LoginPage(),
         "/dashboard": (context) => const DashboardPage(),
         "/barang-masuk": (context) => const BarangMasukPage(),
+        "/barang-masuk-add": (context) => const BarangMasukAddPage(),
         "/barang-masuk-detail": (context) => const BarangMasukDetailPage(),
         "/barang-keluar": (context) => const BarangKeluarPage(),
       },

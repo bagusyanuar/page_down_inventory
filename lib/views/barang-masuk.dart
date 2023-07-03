@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:page_down_inventory/components/card.dart';
 import 'package:page_down_inventory/controller/barang-masuk.dart';
 
@@ -30,7 +28,9 @@ class _BarangMasukPageState extends State<BarangMasukPage> {
       floatingActionButton: isLoading
           ? Container()
           : FloatingActionButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed("/barang-masuk-add");
+              },
               backgroundColor: Colors.green.shade400,
               child: const Icon(Icons.add),
             ),
